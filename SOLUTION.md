@@ -93,3 +93,43 @@ irb(main):003> contact_list.load_contacts_from_csv_file('spec/fixtures/input.csv
 irb(main):004> contact_list.save_contacts_to_csv_file('spec/fixtures/output.csv')
 => true
 ```
+
+## Run the tests
+
+To run the automated tests run the terminal command `bundle exec rspec`.
+
+```
+$ bundle exec rspec
+
+ContactList
+  #initialize
+    sets the contacts instance variable to an empty array
+  #load_contacts_from_csv_file
+    reads the input CSV file and for each row adds an instance of Contact with the name, email and phone data to the contacts array
+  #save_contacts_to_csv_file
+    saves the valid contacts to the specified CSV file with clean phone number
+
+Contact
+  #initialize
+    when name, email, and phone data are not present
+      the name, email, and phone attributes return nil
+    when name, email, and phone arguments are present
+      sets the name, email and phone attributes to the values
+  #valid_email?
+    when email is nil
+      returns false
+    when email contains @ but not .
+      returns false
+    when email contains . but not @
+      returns false
+    when email contains both . and @
+      returns true
+  #clean_phone
+    when phone is nil
+      returns nil
+    when phone contains a mix of numbers and non-digit characters
+      returns only the number characters
+
+Finished in 0.00474 seconds (files took 0.06579 seconds to load)
+11 examples, 0 failures
+```
