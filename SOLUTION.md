@@ -167,3 +167,39 @@ The error was addressed using a guard clause to return if `@phone` is `nil`.
     @phone.delete('^0-9')
   end
 ```
+
+## Further improvements
+
+The `ContactList` and `Contact` classes are designed in an object oriented fashion so they can be extended and improved upon.
+
+### Improvements for `Contact` class
+
+The `Contact` class could be improved by adding length validations to the required fields, for example the `#valid_email?` method could check for a minimum length of characters.
+
+The `Contact` class could also be improved with validations for the `name` attribute, for example to confirm there is a value of a minimum length and that both a first name and last name are present.
+
+If there were several `Contact` fields that needed to be validated in order for it to be included in the cleaned contacts for the output CSV then they could all be grouped within a method called `#valid?`.
+
+### Improvements for `ContactList` class
+
+The `ContactList` class could be improved by extracting values that do not change into constants. For example for the output CSV headers:
+
+```rb
+class ContactList
+  OUTPUT_CSV_HEADERS = %w[
+    name
+    email
+    clean_phone
+  ].freeze
+```
+
+This could then be used in the method `#save_contacts_to_csv_file`:
+
+```rb
+  def save_contacts_to_csv_file(file_path)
+    CSV.open(
+      file_path,
+      'w',
+      write_headers: true,
+      headers: OUTPUT_CSV_HEADERS
+```
