@@ -2,6 +2,8 @@
 
 Tech test in Ruby to process a contacts list from a CSV file including validating and cleaning the data.
 
+For the summary of the answer see [/SOLUTION.md](/SOLUTION.md).
+
 ### Task description
 
 **Task**: Simple Contact List Processor
