@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+class Contact
+  attr_reader :name, :email, :phone
+
+  def initialize(name: nil, email: nil, phone: nil)
+    @name = name
+    @email = email
+    @phone = phone
+  end
+end
