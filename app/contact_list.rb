@@ -23,4 +23,21 @@ class ContactList
 
     @contacts
   end
+
+  def save_contacts_to_csv_file(file_path)
+    CSV.open(
+      file_path,
+      'w',
+      write_headers: true,
+      headers: ['name', 'email', 'clean_phone']
+    ) do |csv|
+      @contacts.each do |contact|
+        next unless contact.valid_email?
+
+        csv << [contact.name, contact.email, contact.clean_phone]
+      end
+    end
+
+    true
+  end
 end

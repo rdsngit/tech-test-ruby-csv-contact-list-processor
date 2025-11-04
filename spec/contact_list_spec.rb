@@ -6,7 +6,6 @@ RSpec.describe ContactList do
   let(:contact_list) { described_class.new }
 
   let(:input_csv_file_path) { 'spec/fixtures/input.csv' }
-  let(:expected_output_csv_file_path) { 'spec/fixtures/input.csv' }
 
   describe '#initialize' do
     it 'sets the contacts instance variable to an empty array' do
@@ -23,6 +22,25 @@ RSpec.describe ContactList do
         have_attributes(class: Contact, name: 'Bob Johnson', email: 'bob@invalid-email', phone: '555.123.4567'),
         have_attributes(class: Contact, name: 'Mary Davis', email: 'mary@email.com', phone: '1234567890')
       ])
+    end
+  end
+
+  describe '#save_contacts_to_csv_file' do
+    let(:output_file) { 'spec/fixtures/output.csv' }
+    let(:expected_output_csv_file_path) { 'spec/fixtures/expected_output.csv' }
+
+    before do
+      contact_list.load_contacts_from_csv_file(input_csv_file_path)
+    end
+
+    after do
+      # delete the output file after each test
+      File.delete(output_file) if File.exist?(output_file)
+    end
+
+    it 'saves the valid contacts to the specified CSV file with clean phone number' do
+      expect(contact_list.save_contacts_to_csv_file(output_file)).to be true
+      expect(CSV.read(output_file, headers: true)).to eq CSV.read(expected_output_csv_file_path, headers: true)
     end
   end
 end
