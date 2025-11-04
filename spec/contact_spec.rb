@@ -27,4 +27,38 @@ RSpec.describe Contact do
       end
     end
   end
+
+  describe '#valid_email?' do
+    context 'when email is nil' do
+      let(:contact) { described_class.new(email: nil) }
+
+      it 'returns false' do
+        expect(contact.valid_email?).to be false
+      end
+    end
+
+    context 'when email contains @ but not .' do
+      let(:contact) { described_class.new(email: 'john@emailcom') }
+
+      it 'returns false' do
+        expect(contact.valid_email?).to be false
+      end
+    end
+
+    context 'when email contains . but not @' do
+      let(:contact) { described_class.new(email: 'johnemail.com') }
+
+      it 'returns false' do
+        expect(contact.valid_email?).to be false
+      end
+    end
+
+    context 'when email contains both . and @' do
+      let(:contact) { described_class.new(email: 'john@email.com') }
+
+      it 'returns true' do
+        expect(contact.valid_email?).to be true
+      end
+    end
+  end
 end
