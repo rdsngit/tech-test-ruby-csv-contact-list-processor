@@ -133,3 +133,37 @@ Contact
 Finished in 0.00474 seconds (files took 0.06579 seconds to load)
 11 examples, 0 failures
 ```
+
+## Handling issues
+
+During the development of the contact list app there were some errors that were addressed.
+
+For example, before the guard clause was added to the `Contact` class method `#clean_phone` there was an error when `@phone` was not set to a value.
+
+```rb
+  def clean_phone
+    @phone.delete('^0-9')
+  end
+```
+
+This resulted in a `NoMethodError` when the value was `nil`.
+
+```
+  2) Contact#clean_phone when phone is nil returns nil
+     Failure/Error: @phone.delete('^0-9')
+
+     NoMethodError:
+       undefined method 'delete' for nil
+     # ./app/contact.rb:21:in 'Contact#clean_phone'
+     # ./spec/contact_spec.rb:70:in 'block (4 levels) in <top (required)>'
+```
+
+The error was addressed using a guard clause to return if `@phone` is `nil`.
+
+```rb
+  def clean_phone
+    return if @phone.nil?
+
+    @phone.delete('^0-9')
+  end
+```
