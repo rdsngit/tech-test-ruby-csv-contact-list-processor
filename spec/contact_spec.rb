@@ -61,4 +61,22 @@ RSpec.describe Contact do
       end
     end
   end
+
+  describe '#clean_phone' do
+    context 'when phone is nil' do
+      let(:contact) { described_class.new(phone: nil) }
+
+      it 'returns nil' do
+        expect(contact.clean_phone).to eq nil
+      end
+    end
+
+    context 'when phone contains a mix of numbers and non-digit characters' do
+      let(:contact) { described_class.new(phone: '123-456-7890') }
+
+      it 'returns only the number characters' do
+        expect(contact.clean_phone).to eq '1234567890'
+      end
+    end
+  end
 end

@@ -14,4 +14,10 @@ class Contact
 
     @email.include?('@') && @email.include?('.')
   end
+
+  def clean_phone
+    return if @phone.nil?
+
+    @phone.delete('^0-9')
+  end
 end
