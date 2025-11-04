@@ -49,3 +49,25 @@ It can meet the following requirements:
 
 2. Clean the phone numbers (remove dashes, dots, spaces - keep only digits)
 3. Validate email addresses (basic check - must contain @ and a dot)
+
+### Addressing the requirements
+
+#### 1. Read the input CSV file
+
+The `ContactList` class' method `#load_contacts_from_csv_file` will receive a string argument for the input CSV file path, open the CSV file, then read each row of data into an instance of the `Contact` class that will be stored in an array for the list.
+
+#### 2. Clean the phone numbers (remove dashes, dots, spaces - keep only digits)
+
+The `Contact` class' method `#clean_phone` will remove non-digit characters from the `phone` attribute and return only the numbers as a string.
+
+#### 3. Validate email addresses (basic check - must contain @ and a dot)
+
+The `Contact` class' method `#valid_email?` will check if the `email` attribute contains both `@` and `.` characters and return `true` if it does otherwise will return `false`.
+
+#### 4. Skip rows with invalid email addresses
+
+The `ContactList` class will include a look to check each of the contacts, process each row of data and use the `valid_email?` method to validate the email address and if it returns `false` then skips that contact.
+
+#### 5. Output a new CSV with cleaned data
+
+The `ContactList` class' method `#save_contacts_to_csv_file` will receive a string argument for the output CSV file path, create the CSV file, and write the valid contacts with the `name`, `email`, and `#clean_phone` data.
