@@ -71,3 +71,25 @@ The `ContactList` class will include a look to check each of the contacts, proce
 #### 5. Output a new CSV with cleaned data
 
 The `ContactList` class' method `#save_contacts_to_csv_file` will receive a string argument for the output CSV file path, create the CSV file, and write the valid contacts with the `name`, `email`, and `#clean_phone` data.
+
+## Run the app
+
+Using the version of Ruby defined in `.ruby-version` run the terminal command `bundle install`.
+
+To use the contact list processor app start an `irb` session in your terminal then use the methods to load and save the contacts to files. See the example below:
+
+```rb
+$ irb
+irb(main):001> require_relative 'app/contact_list'
+=> true
+irb(main):002> contact_list = ContactList.new
+=> #<ContactList:0x000000012201e960 @contacts=[]>
+irb(main):003> contact_list.load_contacts_from_csv_file('spec/fixtures/input.csv')
+=>
+[#<Contact:0x00000001244dc7c0 @email="john@email.com", @name="John Doe", @phone="123-456-7890">,
+ #<Contact:0x00000001244dc4a0 @email="jane@email.com", @name="Jane Smith", @phone=nil>,
+ #<Contact:0x00000001244dc1d0 @email="bob@invalid-email", @name="Bob Johnson", @phone="555.123.4567">,
+ #<Contact:0x00000001244dbeb0 @email="mary@email.com", @name="Mary Davis", @phone="1234567890">]
+irb(main):004> contact_list.save_contacts_to_csv_file('spec/fixtures/output.csv')
+=> true
+```
