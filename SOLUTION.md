@@ -203,3 +203,33 @@ This could then be used in the method `#save_contacts_to_csv_file`:
       write_headers: true,
       headers: OUTPUT_CSV_HEADERS
 ```
+
+The `ContactList` class could also be improved by adapting the design to more closely follow approaches for data migrations, such as Extract - Transform - Load.
+
+An explanation of ETL for be found at: https://www.ibm.com/think/topics/etl
+
+The Extract and Load steps are covered by the methods `#load_contacts_from_csv_file` and `#save_contacts_to_csv_file` so an additional method could be added that would be dedicated to the Transform step.
+
+To implement this data transformation step for the `ContactList` class a method could be added called `#process_contacts`. It would iterate over each stored `Contact`, validate the data and if valid then clean the data and store it in a list called `@clean_contacts`, while invalid contacts would be stored in a list called `@invalid_contacts`.
+
+For example, this method could look like:
+
+```rb
+  def process_contacts
+    @contacts.each do |contact|
+      if contact.valid_email?
+        @clean_contacts << Contact.new(
+          name: contact.name,
+          email: contact.email,
+          phone: contact.clean_phone
+        )
+      else
+        @invalid_contacts << contact
+      end
+    end
+
+    @clean_contacts
+  end
+```
+
+The `@clean_contacts` list would be used when outputting the processed contacts to file in the method `#save_contacts_to_csv_file`. The `@invalid_contacts` could be used if the `ContactList` class were to be further extended with a method to save those to csv file if needed.
